@@ -6,17 +6,22 @@
 #include <fstream>
 using namespace std;
 
-struct ReadFile
+class ReadFile
 {
+public:
+	ReadFile();
+	ReadFile(const char* file_name);
+	ReadFile* createReadFile(const char* file_name);
+	void destroyReadFile();
+	String* readLine();
+	bool eof();
+	void close();
+private:
    ifstream input_file;
    bool _eof;
    bool closed;
 };
 
-ReadFile* createReadFile(const char* file_name);
-void destroyReadFile(ReadFile* rf);
-String* readLine(ReadFile* rf);
-bool eof(ReadFile* rf);
-void close(ReadFile* rf);
+
 
 #endif

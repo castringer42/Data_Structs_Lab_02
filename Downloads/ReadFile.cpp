@@ -2,45 +2,60 @@
 #include <iostream>
 #include <string>
 
-ReadFile* createReadFile(const char* file_name)
-{
-   ReadFile* rf = new ReadFile;
+// 6156361477
 
-   rf->input_file.open(file_name);
-   rf->closed = false;
-   rf->_eof = false;
+using namespace std;
+
+ReadFile::ReadFile()
+{
+
+
+}
+
+ReadFile::ReadFile(const char* file_name)
+{
+    //ReadFile* rf = new ReadFile(file_name);
+
+   this->input_file.open(file_name);
+   this->closed = false;
+   this->_eof = false;
+}
+ReadFile* ReadFile::createReadFile(const char* file_name)
+{
+   ReadFile* rf = new ReadFile();
 
    return rf;
 }
 
-void destroyReadFile(ReadFile* rf)
+void ReadFile::destroyReadFile()
 {
-   close(rf);
-   delete rf;
+   close();
+   delete this;
 }
 
-bool eof(ReadFile* rf)
+bool ReadFile::eof()
 {
-   return rf->_eof;
+   return this->_eof;
 }
 
-void close(ReadFile* rf)
+void ReadFile::close()
 {
-   if (!rf->closed)
+   if (!this->closed)
    {
-      rf->input_file.close();
-      rf->closed = true;
+      this->input_file.close();
+      this->closed = true;
    }
 }
 
-String* readLine(ReadFile* rf)
+String* ReadFile::readLine()
 {
-   if (rf->closed) return NULL;
-   if (rf->_eof) return NULL;
+   if (this->closed) return NULL;
+   if (this->_eof) return NULL;
 
    string text;
-   rf->_eof = !(getline(rf->input_file, text));
+   this->_eof = !(getline(this->input_file, text));
 
    String* str = new String((const char*) text.c_str());
+   //cout << text;
    return str;
 }
